@@ -169,6 +169,16 @@ set_wallpaper() {
 	# set wallpaper with setter
 	if [[ -n "$FORMAT" ]]; then
 		$SETTER "$image.$FORMAT"
+		resources_file=~/.config/regolith2/Xresources
+		if [[ $(cat $resources_file | grep regolith.wallpaper.file) ]]; then
+			echo Modifying file
+			echo $resources_file
+			sed -i -E "s|regolith.wallpaper.file: (.*)|regolith.wallpaper.file: $image.$FORMAT|" $resources_file
+		else
+			echo Appending to file
+			echo regolith.wallpaper.file: $image.$FORMAT >> $resources_file
+		fi
+		/usr/bin/regolith-look refresh
 	fi
 
 	# make/update dwall cache file
