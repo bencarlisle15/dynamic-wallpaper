@@ -174,9 +174,11 @@ set_wallpaper() {
 			echo Modifying file
 			echo $resources_file
 			sed -i -E "s|regolith.wallpaper.file: (.*)|regolith.wallpaper.file: $image.$FORMAT|" $resources_file
+			sed -i -E "s|regolith.lockscreen.file: (.*)|regolith.lockscreen.file: $image.$FORMAT|" $resources_file
 		else
 			echo Appending to file
 			echo regolith.wallpaper.file: $image.$FORMAT >> $resources_file
+			echo regolith.lockscreen.file: $image.$FORMAT >> $resources_file
 		fi
 		/usr/bin/regolith-look refresh
 	fi
