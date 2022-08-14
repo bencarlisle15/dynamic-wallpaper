@@ -180,7 +180,17 @@ set_wallpaper() {
 			echo regolith.wallpaper.file: $image.$FORMAT >> $resources_file
 			echo regolith.lockscreen.wallpaper.file: $image.$FORMAT >> $resources_file
 		fi
-		/usr/bin/regolith-look refresh
+		source /usr/lib/regolith/regolith-session-common.sh
+		load_standard_xres
+		load_regolith_xres
+    		load_standard_xres
+		xres_i3_cleanup
+		LOADER_PATH="$(xrescat regolith.look.loader)"
+		if [ -n  "$LOADER_PATH" ]; then
+			source "$LOADER_PATH"
+			echo "Executing look loader script: $LOADER_PATH"
+			load_look
+		fi
 	fi
 
 	# make/update dwall cache file
